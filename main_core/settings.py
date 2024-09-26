@@ -11,16 +11,17 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+path_file = os.path.join('/home/bana/Documents/python_code/fajr/env/bin/', '.env')
+load_dotenv(dotenv_path=path_file)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v+(9*9jz%4e9q(5+ekyim^_l2l!efg6da-#v8**t+kms-8wfm2'
+# SECRET_KEY = 'django-insecure-v+(9*9jz%4e9q(5+ekyim^_l2l!efg6da-#v8**t+kms-8wfm2'
+SECRET_KEY =os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # our apps
+    'rest_framework',
+    'apps.data_app.apps.DataAppConfig',
+    'apps.user_app.apps.UserAppConfig',
 ]
 
 MIDDLEWARE = [
