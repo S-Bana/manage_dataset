@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.data_app.apps.DataAppConfig',
     'apps.user_app.apps.UserAppConfig',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,25 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_RATES': {
+        # second, minute, hour, day
+        'anon': '1/minute',
+        'user': '5/minute'
+    },
+    'DEFAULT_AUTHENTICATION_CLASSES':(
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        )
+}
+
+from datetime import timedelta
+SIMPLE_JWT = {
+    # days, seconds, microseconds, milliseconds, minutes, hours, week
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "UPDATE_LAST_LOGIN": True,
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
